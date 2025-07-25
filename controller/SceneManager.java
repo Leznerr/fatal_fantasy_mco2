@@ -77,7 +77,10 @@ public final class SceneManager {
         cards.show(root, CARD_MAIN_MENU);
     }
 
- public void showPlayerRegistration() {
+    /**
+     * Displays the player registration screen where new players can be added.
+     */
+    public void showPlayerRegistration() {
     if (playerRegView == null) {
         playerRegView = new PlayerRegistrationView();
 

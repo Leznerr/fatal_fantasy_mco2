@@ -22,6 +22,13 @@ public final class CharacterController {
     private final RaceService raceService;
     private final ClassService classService;
 
+    /**
+     * Constructs a controller for managing the given player's characters.
+     *
+     * @param player         the player whose characters are being managed
+     * @param managementView the view used to display character information
+     * @throws GameException if any parameter is {@code null}
+     */
     public CharacterController(Player player, CharacterManagementView managementView) throws GameException {
         InputValidator.requireNonNull(player, "player");
         InputValidator.requireNonNull(managementView, "managementView");
@@ -59,6 +66,12 @@ public final class CharacterController {
 
     // ------------------ CharacterManualCreationView Integration -----------------------
 
+    /**
+     * Wires a manual creation view to this controller and populates
+     * its dropdown options.
+     *
+     * @param creationView the manual creation view to bind
+     */
     public void bindCharacterManualCreationView(CharacterManualCreationView creationView) {
         creationView.setRaceOptions(
             getAvailableRaces().stream().map(Enum::name).toArray(String[]::new)
@@ -124,6 +137,15 @@ public final class CharacterController {
 
     // ------------------ Character Creation Logic -----------------------
 
+    /**
+     * Creates a new character for the player using the supplied attributes and
+     * updates the management view.
+     *
+     * @param name       the character's name
+     * @param race       chosen race
+     * @param classType  chosen class
+     * @param abilities  list of starting abilities
+     */
     public void handleCreateCharacterRequest(String name, RaceType race, ClassType classType, List<Ability> abilities) {
         try {
             InputValidator.requireNonBlank(name, "Character name");
@@ -146,10 +168,21 @@ public final class CharacterController {
 
     // ------------------ Shared Accessors -----------------------
 
+    /**
+     * Retrieves all races available for character creation.
+     *
+     * @return list of selectable races
+     */
     public List<RaceType> getAvailableRaces() {
         return raceService.getAvailableRaces();
     }
 
+    /**
+     * Returns the abilities allowed for the given class type.
+     *
+     * @param classType the chosen class
+     * @return list of abilities available to that class
+     */
     public List<Ability> getAvailableAbilities(ClassType classType) {
         InputValidator.requireNonNull(classType, "classType");
         return classService.getAvailableAbilities(classType);
@@ -157,6 +190,11 @@ public final class CharacterController {
 
     // ------------------ CharacterListViewingView Integration -----------------------
 
+    /**
+     * Binds the character list viewing screen and sets up its actions.
+     *
+     * @param listView the list view to bind
+     */
     public void bindCharacterListViewingView(CharacterListViewingView listView) {
         listView.setActionListener(e -> {
             String command = e.getActionCommand();
@@ -181,6 +219,12 @@ public final class CharacterController {
 
     // ------------------ CharacterSpecViewingView Integration -----------------------
 
+    /**
+     * Binds the character specification viewing screen, enabling selection and
+     * detail display.
+     *
+     * @param specView the specification view to bind
+     */
     public void bindCharacterSpecViewingView(CharacterSpecViewingView specView) {
         specView.setCharacterOptions(
             player.getCharacters().stream()
