@@ -145,16 +145,16 @@ public static void requireSize(List<?> list, int expectedSize, String message) t
     }
 }
 
- public static void requireNonEmpty(String input, String fieldName) throws IllegalArgumentException {
+    public static void requireNonEmpty(String input, String fieldName) throws GameException {
         if (input == null || input.trim().isEmpty()) {
-            throw new IllegalArgumentException(fieldName + " cannot be empty.");
+            throw new GameException(fieldName + " cannot be empty.");
         }
     }
 
     // Method to ensure a name is unique in your list (you can modify this as needed)
-    public static void requireUniqueName(String input, List<Player> existingPlayers) throws IllegalArgumentException {
+    public static void requireUniqueName(String input, List<Player> existingPlayers) throws GameException {
         if (existingPlayers.stream().anyMatch(p -> p.getName().equalsIgnoreCase(input))) {
-            throw new IllegalArgumentException("The name " + input + " is already taken.");
+            throw new GameException("The name " + input + " is already taken.");
         }
     }
 }
