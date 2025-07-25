@@ -157,6 +157,11 @@ public void actionPerformed(ActionEvent e) {
         });
     }
 
+    /**
+     * Opens the character management view for the given player.
+     *
+     * @param player the player whose characters will be managed
+     */
     public void handleNavigateToCharacterManagement(Player player) {
         InputValidator.requireNonNull(player, "player");
         SwingUtilities.invokeLater(() -> sceneManager.showCharacterManagement(player));
@@ -164,6 +169,12 @@ public void actionPerformed(ActionEvent e) {
 
 
        // Method to handle player registration
+    /**
+     * Registers two new players and saves them to persistent storage.
+     *
+     * @param player1Name name for player one
+     * @param player2Name name for player two
+     */
     public void handleRegisterPlayers(String player1Name, String player2Name) {
         // Create new Player objects with the provided names
         Player player1 = new Player(player1Name);
@@ -182,6 +193,9 @@ public void actionPerformed(ActionEvent e) {
         System.out.println("Players " + player1Name + " and " + player2Name + " have been registered.");
     }
 
+    /**
+     * Displays the Hall of Fame management screen.
+     */
     public void handleNavigateToHallOfFame() {
         SwingUtilities.invokeLater(() -> {
             HallOfFameManagementView view = new HallOfFameManagementView();
@@ -190,6 +204,9 @@ public void actionPerformed(ActionEvent e) {
         });
     }
 
+    /**
+     * Returns to the main menu from a secondary view.
+     */
     public void navigateBackToMainMenu() {
         SwingUtilities.invokeLater(() -> mainMenuView.setVisible(true));
     }
