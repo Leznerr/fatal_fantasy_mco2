@@ -176,8 +176,12 @@ public void actionPerformed(ActionEvent e) {
         gameData.getAllPlayers().add(player1);
         gameData.getAllPlayers().add(player2);
 
-        // Save the updated game data with the new players
+        // Persist
         SaveLoadService.saveGame(gameData);  // Save the game data with the newly added players
+
+        // Update in-memory list
+        players.add(player1);
+        players.add(player2);
 
         System.out.println("Players " + player1Name + " and " + player2Name + " have been registered.");
     }
@@ -240,5 +244,17 @@ public void actionPerformed(ActionEvent e) {
      */
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    /**
+     * Checks whether a proposed player name already exists.
+     *
+     * @param name the player name to verify
+     * @return {@code true} if no registered player has this name
+     */
+    public boolean isNameUnique(String name) {
+        InputValidator.requireNonBlank(name, "player name");
+        return players.stream()
+                .noneMatch(p -> p.getName().equalsIgnoreCase(name));
     }
 }
