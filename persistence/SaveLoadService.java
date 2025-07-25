@@ -3,18 +3,17 @@ package persistence;
 import model.core.Player;
 import model.core.HallOfFameEntry;
 import model.util.GameException;
+import model.util.Constants;
 import java.io.*;
 import java.util.List;
 
 public class SaveLoadService {
 
-    // File paths for saving and loading game data
-    private static final String GAME_DATA_FILE = "game_data.dat"; 
-    private static final String HALL_OF_FAME_FILE = "hall_of_fame.dat"; 
+    // File paths defined in Constants
 
     // Saves the game data to a file
     public static void saveGame(GameData gameData) throws GameException {
-        try (ObjectOutputStream gameDataStream = new ObjectOutputStream(new FileOutputStream(GAME_DATA_FILE))) {
+        try (ObjectOutputStream gameDataStream = new ObjectOutputStream(new FileOutputStream(Constants.SAVE_FILE_PATH))) {
             gameDataStream.writeObject(gameData); // Save the entire GameData object
             System.out.println("Game data has been saved successfully.");
         } catch (IOException e) {
@@ -25,7 +24,7 @@ public class SaveLoadService {
 
     // Loads the game data from a file
     public static GameData loadGame() throws GameException {
-        try (ObjectInputStream gameDataStream = new ObjectInputStream(new FileInputStream(GAME_DATA_FILE))) {
+        try (ObjectInputStream gameDataStream = new ObjectInputStream(new FileInputStream(Constants.SAVE_FILE_PATH))) {
             return (GameData) gameDataStream.readObject(); // Read the GameData object
         } catch (FileNotFoundException e) {
             // If the file does not exist (first-time load), return a new empty GameData object
@@ -39,7 +38,7 @@ public class SaveLoadService {
 
     // Saves Hall of Fame data
     public static void saveHallOfFame(List<HallOfFameEntry> hallOfFameEntries) throws GameException {
-        try (ObjectOutputStream hallOfFameStream = new ObjectOutputStream(new FileOutputStream(HALL_OF_FAME_FILE))) {
+        try (ObjectOutputStream hallOfFameStream = new ObjectOutputStream(new FileOutputStream(Constants.HALL_OF_FAME_SAVE_PATH))) {
             hallOfFameStream.writeObject(hallOfFameEntries); // Save the Hall of Fame entries
             System.out.println("Hall of Fame has been saved successfully.");
         } catch (IOException e) {
@@ -50,7 +49,7 @@ public class SaveLoadService {
 
     // Loads the Hall of Fame data
     public static List<HallOfFameEntry> loadHallOfFame() throws GameException {
-        try (ObjectInputStream hallOfFameStream = new ObjectInputStream(new FileInputStream(HALL_OF_FAME_FILE))) {
+        try (ObjectInputStream hallOfFameStream = new ObjectInputStream(new FileInputStream(Constants.HALL_OF_FAME_SAVE_PATH))) {
             Object obj = hallOfFameStream.readObject();
             if (obj instanceof List<?>) {
                 List<?> rawList = (List<?>) obj;
