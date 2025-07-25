@@ -1,0 +1,8 @@
+*.class
+/out/
+# IDE directories
+.idea/
+*.iml
+.gradle/
+/build/
+/bin/
