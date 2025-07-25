@@ -157,4 +157,20 @@ public static void requireSize(List<?> list, int expectedSize, String message) t
             throw new GameException("The name " + input + " is already taken.");
         }
     }
+
+    /**
+     * Checks if the provided player name is unique within the given list.
+     *
+     * @param input           the name to check for uniqueness
+     * @param existingPlayers list of already registered players
+     * @return {@code true} if the name does not clash with an existing player
+     */
+    public static boolean isNameUnique(String input, List<Player> existingPlayers) {
+        if (existingPlayers == null) {
+            throw new IllegalArgumentException("existingPlayers must not be null");
+        }
+
+        return existingPlayers.stream()
+                .noneMatch(p -> p.getName().equalsIgnoreCase(input));
+    }
 }

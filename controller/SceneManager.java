@@ -102,20 +102,24 @@ public final class SceneManager {
                         // Show an error message if names are empty
                         JOptionPane.showMessageDialog(playerRegView, "Both player names must be entered.", 
                                 "Error", JOptionPane.ERROR_MESSAGE);
+                    } else if (!gameManagerController.isNameUnique(player1Name)
+                            || !gameManagerController.isNameUnique(player2Name)
+                            || player1Name.equalsIgnoreCase(player2Name)) {
+                        JOptionPane.showMessageDialog(playerRegView,
+                                "Player names must be unique.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         // Register the players and save them to the file
-                        GameManagerController controller = new GameManagerController(this, 
-                                new HallOfFameController(new HallOfFameManagementView()), mainMenuView);
-                        controller.handleRegisterPlayers(player1Name, player2Name); // Save the players
+                        gameManagerController.handleRegisterPlayers(player1Name, player2Name);
 
                         // Show confirmation message
-                        JOptionPane.showMessageDialog(playerRegView, "Players Registered: " + player1Name + " and " + player2Name, 
+                        JOptionPane.showMessageDialog(playerRegView, "Players Registered: " + player1Name + " and " + player2Name,
                                 "Success", JOptionPane.INFORMATION_MESSAGE);
 
                         System.out.println("Players Registered: " + player1Name + " and " + player2Name);
 
                         // After successful registration, return to the main menu
-                        showMainMenu(); 
+                        showMainMenu();
                     }
                 }
             }
