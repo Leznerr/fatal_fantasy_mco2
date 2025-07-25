@@ -8,6 +8,7 @@ import persistence.SaveLoadService;
 import view.*;
 
 import javax.swing.*;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -67,6 +68,18 @@ public final class GameManagerController implements ActionListener {
         mainMenuView.setController(this);
     }
 
+    /**
+     * Closes the main window gracefully without terminating the JVM.
+     */
+    private void closeMainWindow() {
+        SwingUtilities.invokeLater(() -> {
+            Window window = SwingUtilities.getWindowAncestor(mainMenuView.getContentPane());
+            if (window != null) {
+                window.dispose();
+            }
+        });
+    }
+
     /** Main button dispatcher for MainMenuView. */
   @Override
 public void actionPerformed(ActionEvent e) {
@@ -97,8 +110,7 @@ public void actionPerformed(ActionEvent e) {
         }
         case MainMenuView.ACTION_EXIT -> {
             handleSaveGameRequest();
-            mainMenuView.dispose(); // Close the MainMenuView
-            System.exit(0); // Close the application
+            closeMainWindow();
         }
         default -> {
             JOptionPane.showMessageDialog(mainMenuView, "Unknown action: " + command, "Unknown Action", JOptionPane.WARNING_MESSAGE);
